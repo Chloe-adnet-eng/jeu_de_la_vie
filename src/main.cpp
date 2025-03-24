@@ -7,6 +7,7 @@
 #define CASE_COLONNE 10
 
 using namespace std;
+using std::copy;
 
 int main()
 {
@@ -34,11 +35,16 @@ int main()
             }
         }
 
+        vector<vector<Case>> next_tableau = tableau;
+        
         for (int i=0; i<WINDOW_COTE/CASE_LIGNE; i++){
             for (int j=0; j<WINDOW_COTE/CASE_COLONNE; j++){
                 tableau[i][j].PrintCase(window);
+                next_tableau[i][j].UpdateState(tableau);
             }
         }
+
+        tableau = next_tableau;
         
         window.display();
     }
