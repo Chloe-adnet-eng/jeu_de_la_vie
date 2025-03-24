@@ -11,6 +11,7 @@ FetchContent_Declare(SFML
     EXCLUDE_FROM_ALL
     SYSTEM)
 FetchContent_MakeAvailable(SFML)
+include_directories(include)
 
 add_executable(main src/main.cpp)
 target_compile_features(main PRIVATE cxx_std_17)
