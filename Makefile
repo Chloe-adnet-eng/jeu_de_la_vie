@@ -1,8 +1,10 @@
-SRC_DIR = src
-BUILD_DIR = build
-
 compile:
-	clang++ $(SRC_DIR)/$(fichier).cpp -o $(BUILD_DIR)/$(fichier)
+	cmake -B build
+	cmake --build build
 
 execute:
-	./$(BUILD_DIR)/$(fichier_compile)
+	./build/bin/main
+
+compile_and_execute:
+	$(MAKE) compile
+	$(MAKE) execute
