@@ -14,12 +14,12 @@ int main()
     srand(time(0));
     sf::RenderWindow window = sf::RenderWindow(sf::VideoMode({WINDOW_COTE, WINDOW_COTE}), "Grille Jeu de la vie");
     // Pré-allocation de la mémoire
-    vector<Case> initial_board(NOMBRE_CASE_COTE * NOMBRE_CASE_COTE);
+    vector<Case> board(NOMBRE_CASE_COTE * NOMBRE_CASE_COTE);
     int rectangle_length = WINDOW_COTE/NOMBRE_CASE_COTE;
 
     for (int i = 0; i < NOMBRE_CASE_COTE; i++) {
         for (int j = 0; j < NOMBRE_CASE_COTE; j++) {
-            initial_board[i * NOMBRE_CASE_COTE + j] = Case(i * rectangle_length, j * rectangle_length);
+            board[i * NOMBRE_CASE_COTE + j] = Case(i * rectangle_length, j * rectangle_length);
         }
     }
 
@@ -38,22 +38,30 @@ int main()
         }
 
         if (clock.getElapsedTime().asSeconds() >= frame_rate) {
-            vector<Case> next_board = initial_board;
+            vector<Case> next_board = board; 
+
+            // Mise à jour de l'état de chaque cellule
+            for (int i = 0; i < NOMBRE_CASE_COTE; i++) {
+                for (int j = 0; j < NOMBRE_CASE_COTE; j++) {
+                    int idx = i * NOMBRE_CASE_COTE + j;
+                    next_board[idx].UpdateState(board); 
+                }
+            }
+
+            board = next_board;  
+
+            window.clear(); 
 
             for (int i = 0; i < NOMBRE_CASE_COTE; i++) {
                 for (int j = 0; j < NOMBRE_CASE_COTE; j++) {
                     int idx = i * NOMBRE_CASE_COTE + j;
-                    initial_board[idx].PrintCase(window);  // Dessiner la case
-                    next_board[idx].UpdateState(initial_board);  // Mettre à jour l'état de la case
+                    board[idx].PrintCase(window);  
                 }
             }
 
-            initial_board = next_board;  // Mise à jour de l'état pour la prochaine itération
-
-            clock.restart();  // Réinitialiser le chrono
-
-            window.display();  // Affichage
-        }
+            clock.restart(); 
+            window.display();
 
     }
+}
 }

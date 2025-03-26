@@ -78,12 +78,16 @@ class Case {
             ){
                 this->state = State::Alive;
             }
-            else if (this->state == State::Dead && (alive_neighbours == 3)){
+            else if (this->state == State::Dead && alive_neighbours == 3){
                 this->state = State::Alive;
             }
-            else {
+            else if( 
+                alive_neighbours == 0 || alive_neighbours == 1 || alive_neighbours == 4|| alive_neighbours == 5||
+                alive_neighbours == 6 || alive_neighbours == 7 || alive_neighbours == 8
+            ){
                 this->state = State::Dead;
             }
+
         }
         
 };
